@@ -1,3 +1,4 @@
+import { useMedia } from "react";
 import useLocalStorage from "./useLocalStorage";
 
 const useDarkMode = () => {
@@ -5,6 +6,7 @@ const useDarkMode = () => {
     localStorage.setItem("darkMode", true);
   }
   const [someValue, setSomeValue] = useLocalStorage("darkMode");
+
   return [someValue, setSomeValue];
 };
 
