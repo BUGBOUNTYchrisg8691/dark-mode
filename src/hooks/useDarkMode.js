@@ -4,7 +4,6 @@ import { useLocalStorage } from "./useLocalStorage";
 export const useDarkMode = (key) => {
   const [enabledState, setEnabledState] = useLocalStorage(key);
   const prefersDarkMode = usePrefersDarkMode();
-  console.log(enabledState);
   const enabled =
     typeof enabledState !== "undefined" ? enabledState : prefersDarkMode;
 
