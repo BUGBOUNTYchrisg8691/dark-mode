@@ -1,13 +1,26 @@
-import { useMedia } from "react";
-import useLocalStorage from "./useLocalStorage";
+import { useEffect, useState } from "react";
+import { useLocalStorage } from "./useLocalStorage";
 
-const useDarkMode = () => {
-  if (window.matchMedia("(prefers-color-scheme: dark)")) {
-    localStorage.setItem("darkMode", true);
-  }
-  const [someValue, setSomeValue] = useLocalStorage("darkMode");
+export const useDarkMode = (key) => {
+  const [enabledState, setEnabledState] = useLocalStorage(key);
+  const prefersDarkMode = usePrefersDarkMode();
+  console.log(enabledState);
+  const enabled =
+    typeof enabledState !== "undefined" ? enabledState : prefersDarkMode;
 
-  return [someValue, setSomeValue];
+  useEffect(() => {
+    const className = "dark-mode";
+    const element = document.querySelector(".App");
+    if (enabled) {
+      element.classList.add(className);
+    } else {
+      element.classList.remove(className);
+    }
+  }, [enabled]);
+
+  return [enabled, setEnabledState];
 };
 
-export default useDarkMode;
+function usePrefersDarkMode() {
+  return window.matchMedia("(prefers-color-scheme: dark)");
+}
